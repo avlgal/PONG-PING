@@ -38,21 +38,49 @@ class Player(GameSprite):
         if keys[K_DOWN] and self.rect.y < win_h - 80:
             self.rect.y += self.speed
 
-racket1 = Player(img_racket, 40, 200, 40 ,50, 10)
-racket2 = Player(img_racket, 420, 200, 40, 50, 10)
+racket1 = Player(img_racket, 40, 200, 40 ,200, 10)
+racket2 = Player(img_racket, 420, 200, 40, 200, 10)
 ball = GameSprite(img_ball, 225, 200, 50, 50, 10)
+speed_x = 5
+speed_y = 5
+
+font.init()
+font = font.SysFont('veranda', 70)
+loseL = font.render('player on the left lose', True, (100,0,0))
+loseR = font.render('player on the Right lose', True, (100,0,0))
+reset = font.render('R - to restart', True, (180,0,0))
 
 finish = False
 run = True
 
 while run:
-    window.blit(background, (0,0))
+    
     for e in event.get():
         if e.type == QUIT:
             run = False
+        if e.type == KEYDOWN:
+            if e.key == K_r:
+                finish = False
+                ball.rect.x = 225
+                ball.rect.y = 200
     if not finish:
+        window.blit(background, (0,0))
         racket1.update_L()
         racket2.update_R()
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+        if racket1.rect.colliderect(ball.rect) or racket2.rect.colliderect(ball.rect):
+            speed_x *= -1
+        if ball.rect.y > win_h - 50 or ball.rect.y < 0:
+            speed_y *= -1
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(loseL, (200, 200))
+            #run = False
+        if ball.rect.x > win_w:
+            finish = True
+            window.blit(loseL, (200, 200))
+            #run = False
         racket1.reset()
         racket2.reset()
         ball.reset()
