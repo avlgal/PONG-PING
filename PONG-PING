@@ -6,8 +6,8 @@ img_back = '123456.jpg'
 img_racket = '1.png'
 img_ball = 'asteroid.png'
 
-win_w = 500
-win_h = 500
+win_w = 600
+win_h = 600
 display.set_caption('PONG-PING')
 window = display.set_mode((win_w, win_h))
 background = transform.scale(image.load(img_back), (win_w, win_h))
@@ -38,8 +38,8 @@ class Player(GameSprite):
         if keys[K_DOWN] and self.rect.y < win_h - 80:
             self.rect.y += self.speed
 
-racket1 = Player(img_racket, 40, 200, 40 ,200, 10)
-racket2 = Player(img_racket, 420, 200, 40, 200, 10)
+racket1 = Player(img_racket, 40, 200, 40 ,150, 10)
+racket2 = Player(img_racket, 520, 200, 40, 150, 10)
 ball = GameSprite(img_ball, 225, 200, 50, 50, 10)
 speed_x = 5
 speed_y = 5
@@ -73,16 +73,18 @@ while run:
             speed_x *= -1
         if ball.rect.y > win_h - 50 or ball.rect.y < 0:
             speed_y *= -1
-        if ball.rect.x < 0:
-            finish = True
-            window.blit(loseL, (200, 200))
-            #run = False
-        if ball.rect.x > win_w:
-            finish = True
-            window.blit(loseL, (200, 200))
-            #run = False
         racket1.reset()
         racket2.reset()
         ball.reset()
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(loseR, (40, 200))
+            window.blit(reset, (50, 500))
+            #run = False
+        if ball.rect.x > win_w:
+            finish = True
+            window.blit(loseL, (60, 200))
+            window.blit(reset, (50, 500))
+            #run = False
     display.update()
     time.delay(30)
