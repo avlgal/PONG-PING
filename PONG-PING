@@ -78,12 +78,12 @@ while run:
         ball.reset()
         if ball.rect.x < 0:
             finish = True
-            window.blit(loseR, (40, 200))
+            window.blit(loseL, (60, 200))
             window.blit(reset, (50, 500))
             #run = False
         if ball.rect.x > win_w:
             finish = True
-            window.blit(loseL, (60, 200))
+            window.blit(loseR, (40, 200))
             window.blit(reset, (50, 500))
             #run = False
     display.update()
